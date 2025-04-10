@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz App - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .quiz-box {
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .quiz-box:hover {
+            transform: scale(1.05);
+        }
+        .quiz-img {
+            height: 150px;
+            object-fit: cover;
+            border-radius: 1rem 1rem 0 0;
+        }
+
+        body {
+            background-image: url('images/bg.jpg'); /* adjust path if needed */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="position-fixed top-0 end-0 p-3">
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-2">
+                <div class="mt-5 bg-white p-3 rounded shadow" style="max-height: 550px; max-width:fit-content ;overflow-y: auto;">
+                    <h4 class="text-center mb-3">Your Quiz Attempts</h4>
+                    <table class="table table-striped mb-0">
+                        <thead class="sticky-top bg-white">
+                            <tr>
+                                <th>#</th>
+                                <th>Theme</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="score-table-body">
+                            <!--Scores will be injected here-->
+                        </tbody>
+                    </table>
+                </div>             
+            </div>
+        
+            <div class="col-6">
+                <div class="container py-4">
+                    <div class="text-center mb-4 bg-white rounded">
+                        <h1 class="fw-bold">Quiz App</h1>
+                        <h4 id="greeting">Welcome!!!</h4>
+                    </div>
+            
+            
+                    <!-- Quiz Theme Grid -->
+                    <div class="row g-4 justify-content-center">
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('general')">
+                                <img src="images/general.jpg" class="card-img-top quiz-img" alt="General Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">General Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('science')">
+                                <img src="images/science.jpg" class="card-img-top quiz-img" alt="Science Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Science Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('geography')">
+                                <img src="images/geography.jpg" class="card-img-top quiz-img" alt="Geography Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Geography Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('sports')">
+                                <img src="images/sports.jpg" class="card-img-top quiz-img" alt="Sports Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Sports Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('computers')">
+                                <img src="images/tech.png" class="card-img-top quiz-img" alt="Tech Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Tech Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-6 col-md-4">
+                            <div class="card quiz-box" onclick="goToQuiz('movies')">
+                                <img src="images/movies.jpg" class="card-img-top quiz-img" alt="Movies Quiz">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Movies Quiz</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4"></div>
+
+        </div>
+        
+    </div>
+
+    
+    <script>
+        const username = localStorage.getItem("username") || "User";
+        document.getElementById("greeting").textContent = `Welcome, ${username} !!!`;
+
+        function goToQuiz(theme) {
+            window.location.href = `quiz.html?theme=${theme}`;
+        }
+
+        function logout() {
+            localStorage.removeItem("username");
+            localStorage.removeItem("email");
+            window.location.href = "login.html";
+        }
+
+        function loadQuizScores() {
+            const email = localStorage.getItem("email");
+            if (!email) return;
+    
+            fetch(`fetch_scores.php?email=${encodeURIComponent(email)}`)
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById("score-table-body");
+                    tbody.innerHTML = "";
+                    data.forEach((row, i) => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${row.theme}</td>
+                                <td>${row.score} / ${row.total}</td>
+                                <td>${new Date(row.attempt_time).toLocaleString()}</td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+    
+        window.onload = loadQuizScores;
+    </script>
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    max-width: 600px;
+}
+
+.question-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.option-button {
+    width: 100%;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+.option-button.correct {
+    background-color: #28a745 !important;
+    color: white;
+}
+
+.option-button.incorrect {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.option-button.selected{
+    background-color: blue;
+    color: white;
+}
+
+
+.alert {
+    font-size: 18px;
+    font-weight: bold;
+}

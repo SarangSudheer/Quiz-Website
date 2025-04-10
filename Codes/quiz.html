@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-image: url('images/bg7.jpg'); /* adjust path if needed */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .fixed-top-left {
+            position: fixed;
+            top: 10px;       /* distance from top */
+            left: 10px;      /* distance from left */
+            z-index: 9999;   /* makes sure it's on top of other elements */
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center ">
+
+    <div class="mb-3 fixed-top-left">
+        <a href="main_menu.html" id="" class="btn btn-outline-secondary text-white">&larr; Back to Home</a>
+    </div>
+    <div class="container bg-white shadow p-4 rounded">
+        <header class="text-center mb-4">
+            <h1 class="text-primary">Quiz Game</h1>
+        </header>
+        
+        
+
+        <div id="quiz-container"></div>
+        
+        <div class="text-center mt-4">
+            <button id="submit-btn" class="btn btn-success" disabled>Submit Quiz</button>
+            
+        </div>
+
+        <div id="result-container" class="text-center mt-3 alert alert-info d-none">
+            <h3>Quiz Completed!</h3>
+            <p>Your Score: <span id="score">0</span> / <span id="total">0</span></p>
+        </div>
+    </div>
+
+     
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
